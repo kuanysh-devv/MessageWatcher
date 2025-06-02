@@ -11,6 +11,7 @@ ENDPOINTS = {
     'Ack1.': os.getenv('ACK_UPLOAD_URL'),
     'Ack2.': os.getenv('ACK_UPLOAD_URL'),
     'UponDocInfo': os.getenv('UPON_UPLOAD_URL'),
+    'Registration': os.getenv('REGISTRATION_UPLOAD_URL'),
 }
 
 def get_upload_url(file_name):
@@ -47,9 +48,12 @@ def upload_file(file_path):
     print(f"Uploading {file_name} to {upload_url}")
     try:
         with open(file_path, 'rb') as f:
-            files = {'file': (file_name, f, 'application/xml')}
-            headers = {'X-API-Key': f'{API_KEY}'}
-            response = requests.post(upload_url, files=files, headers=headers, timeout=5)
-            print(f"Uploaded {file_name} → {response.status_code} - {response.text}")
+            file_content = f.read()  # read the whole file into memory
+
+        files = {'file': (file_name, file_content, 'application/xml')}
+        headers = {'X-API-Key': f'{API_KEY}'}
+        response = requests.post(upload_url, files=files, headers=headers)
+
+        print(f"Uploaded {file_name} → {response.status_code} - {response.text}")
     except Exception as e:
         print(f"❌ Error uploading {file_name}: {e}")

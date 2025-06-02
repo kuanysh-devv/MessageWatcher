@@ -1,2 +1,5 @@
 .venv
+venv
 .idea
+observer/__pycache__/*
+observer/management/commands/__pycache__/*
