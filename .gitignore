@@ -1,5 +1,12 @@
 .venv
 venv
+.env
 .idea
 observer/__pycache__/*
 observer/management/commands/__pycache__/*
+observer/pycache/
+observer/management/commands/pycache/
+observer/migrations/pycache/
+observer/pycache/*
+observer/management/commands/pycache/*
+observer/migrations/pycache/*
