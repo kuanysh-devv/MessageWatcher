@@ -2,6 +2,7 @@ import os
 import time
 import requests
 from dotenv import load_dotenv
+from .utils import log_error
 
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
@@ -53,7 +54,14 @@ def upload_file(file_path):
         files = {'file': (file_name, file_content, 'application/xml')}
         headers = {'X-API-Key': f'{API_KEY}'}
         response = requests.post(upload_url, files=files, headers=headers)
-
-        print(f"Uploaded {file_name} → {response.status_code} - {response.text}")
+        if response.status_code >= 400:
+            error_detail = {
+                "status_code": response.status_code,
+                "response_text": response.text
+            }
+            log_error(file_name, error_detail)
+            print(f"❌ Failed to upload {file_name} → {response.status_code} - {response.text}")
+        else:
+            print(f"✅ Uploaded {file_name} → {response.status_code} - {response.text}")
     except Exception as e:
         print(f"❌ Error uploading {file_name}: {e}")

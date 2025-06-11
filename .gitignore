@@ -1,6 +1,7 @@
 .venv
 venv
 .env
+mw_errors.json
 .idea
 observer/__pycache__/*
 observer/management/commands/__pycache__/*
